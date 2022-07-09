@@ -1,0 +1,54 @@
+****************Bug 1: Tên bugs
+Step 1: 
+Step 2:
+	- Quan sát:
+	
+****************Bug 2: Tên bugs
+
+User managerment
+1. UI
+1.1 Filter Area
+	1.1 Control component (Test cùng Button Search)
+		- Username (Nhớ chia ra Happy/Worse case)
+			+ Search toán tử Gần đúng (LIKE %%) ==> FAILED
+			+ Chữ hoa thường/kí tự đặc biệt (' or 1 = 1 --) ==> PASSED 
+		- User role
+			+ Chọn lần lượt các options, expect là danh sách user thuộc về role đó ==> PASSED
+		- Employee Name (Autocomplete)
+			+ [BỎ TEST NÀY] Chỉ show danh sách EmployeeName đang active ==> FAILED (Đang vẫn show cả employee đã deleted)
+			+ Để trống, expect là kết quả tìm kiếm không bị filter bởi EmployeeName này.
+				+ F5 thì đang work đúng ==> PASSED
+				+ Chọn bất kì 1 EmployeeName xong xóa đi, expect là không có filter ==> FAILED (Nó đang ghi nhớ cái lần chọn trước đó).
+			+ Chọn đúng EmployeeName đang active, expect có filter show ra record đó ==> PASSED
+		- Status: 
+			+ ... ==> PASSED
+		- ... Pairswise: Kết hợp các control component với nhau. Ví dụ:
+			+  
+	2.2 Button Reset
+		- Nhập bất kì control component nào, chọn Reset thì sẽ xóa hết các chọn đó ==> PASSED
+
+1.2 Grid Table
+- UI
+	- Phải có options "Số dòng trên trang" ==> FAILED (Đang fixed 50)
+	- Nút First/Prev vs Next/Last 
+		+ Đứng ở page 1 thì không show / hoặc disabled "First/Prev" ==> FAILED
+		+ Đứng ở page "cuối cùng" thì không show / hoặc disabled "Next/Last" ==> FAILED
+	- Dài quá phải có scroll bar ==> FAILED
+	- Checkxob "Check all"
+		+ Check/Uncheck all
+		+ Check/Uncheck single, thì phải trigger "all"
+		+ Check all ở trang 1, qua trang 2, quay lại trang 1 phải giữ trạng thái checked all ==> FAILED
+	-  Sort
+		+ Mũi tên tăng/giảm phải khớp với kq search ==> FAILED (Mũi tên xuống mà search ASC. Quan sát thêm url sẽ thấy querystring là "?sortField=user_name&sortOrder=ASC")
+		+ Sort từng column, danh sách phải sắp xếp theo tiêu chí sort column đó ==> PASSED
+	- Mỗi dòng phải có thêm action Edit ==> FAILED (Không có button Edit)
+	- Button Delete
+		+ Không check record nào, expect do not thing ==> PASSED
+		+ Delete popup: 
+			. Xóa 1 user: Expect msg "Do you want to delete "UserName" ?" ==> FAILED
+			. Xóa nhiều user: Expect msg "Do you want to delete "UserName1, UserName2" ?" ==> FAILED
+		+ Happy case: Mở 1 tab, xóa xong thì expected nó load lại ds mới ==> PASSED
+		+ Worse case: Mở 2 tab.	=> FAILED (Unclear msg, expect "User is not exist or deleted")
+	- Button Add new
+		+ Navigate to Add new form ==> PASSED
+		+ and more...
